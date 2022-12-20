@@ -55,8 +55,15 @@ func main() {
 	e.GET("/expenses/:id", h.GetExpensesHandlerByID)
 	e.PUT("/expenses/:id", h.UpdateExpensesHandler)
 	e.DELETE("/expenses/:id", h.DeleteExpenseHandlerByID)
+	// e.GET("/expenses", h.ListExpensesHandler)
+	e.Use(middleware.BasicAuth(func(username, password string, _ echo.Context) (bool, error) {
+		if username == "admin" || password == "123456" {
+			return true, nil
+		}
+		return false, nil
+	}))
+
 	e.GET("/expenses", h.ListExpensesHandler)
-	// e.GET("/expenses", ListExpensesHandler)
 
 	fmt.Println("start at port:", os.Getenv("PORT"))
 	go func() {
