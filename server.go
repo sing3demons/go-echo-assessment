@@ -11,6 +11,9 @@ import (
 	"syscall"
 	"time"
 
+	_ "github.com/lib/pq"
+	"github.com/sing3demons/assessment/handler"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -40,12 +43,15 @@ func initDB() *sql.DB {
 }
 
 func main() {
+	db := initDB()
 
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	// e.POST("/expenses", CreateExpensesHandler)
+	h := handler.NewApplication(db)
+
+	e.POST("/expenses", h.CreateExpensesHandler)
 	// e.GET("/expenses/:id", GetExpensesHandlerByID)
 	// e.PUT("/expenses/:id", UpdateExpensesHandler)
 	// e.DELETE("/expenses/:id", DeleteExpenseHandlerByID)
