@@ -31,3 +31,23 @@ func (h *handler) CreateExpensesHandler(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, m.ID)
 }
+
+func (h *handler) UpdateExpensesHandler(c echo.Context) error {
+	var m NewsExpenses
+
+	id := c.Param("id")
+
+	if err := c.Bind(&m); err != nil {
+		return c.JSON(http.StatusBadRequest, Err{Message: err.Error()})
+	}
+
+	stmt, err := h.DB.Prepare("UPDATE expenses SET title=$2, amount=$3, note=$4, tags=$5 WHERE id=$1")
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, Err{Message: err.Error()})
+	}
+	_, err = stmt.Exec(id, m.Title, m.Amount, m.Note, m.Tags)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, Err{Message: err.Error()})
+	}
+	return c.JSON(http.StatusNoContent, "Update")
+}

@@ -53,8 +53,8 @@ func main() {
 
 	e.POST("/expenses", h.CreateExpensesHandler)
 	// e.GET("/expenses/:id", GetExpensesHandlerByID)
-	// e.PUT("/expenses/:id", UpdateExpensesHandler)
-	// e.DELETE("/expenses/:id", DeleteExpenseHandlerByID)
+	e.PUT("/expenses/:id", h.UpdateExpensesHandler)
+	e.DELETE("/expenses/:id", h.DeleteExpenseHandlerByID)
 	// e.GET("/expenses", ListExpensesHandler)
 	// e.GET("/expenses", ListExpensesHandler)
 
