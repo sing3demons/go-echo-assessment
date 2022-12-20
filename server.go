@@ -52,10 +52,10 @@ func main() {
 	h := handler.NewApplication(db)
 
 	e.POST("/expenses", h.CreateExpensesHandler)
-	// e.GET("/expenses/:id", GetExpensesHandlerByID)
+	e.GET("/expenses/:id", h.GetExpensesHandlerByID)
 	e.PUT("/expenses/:id", h.UpdateExpensesHandler)
 	e.DELETE("/expenses/:id", h.DeleteExpenseHandlerByID)
-	// e.GET("/expenses", ListExpensesHandler)
+	e.GET("/expenses", h.ListExpensesHandler)
 	// e.GET("/expenses", ListExpensesHandler)
 
 	fmt.Println("start at port:", os.Getenv("PORT"))

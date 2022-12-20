@@ -1,0 +1,6 @@
+@uri=http://127.0.0.1:2565/expenses
+GET {{uri}}/2 HTTP/1.1
+
+###
+
+GET {{uri}} HTTP/1.1
